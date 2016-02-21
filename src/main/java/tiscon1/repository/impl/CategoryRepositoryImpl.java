@@ -29,6 +29,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public static final String MUSIC_ID = "34";
     static final String SEARCH_URL = "https://itunes.apple.com/jp/rss/top{genreName}/limit=10/genre={subgenreId}/json";
     static final String LOOKUP_ID_URL = "https://itunes.apple.com/lookup?country=JP&id={id}";
+    private static List<Item> oldTop10movie=null;
+    private static List<Item> oldTop10music=null;
 
     /**
      * プロキシ設定を必要とする場合のRestTemplate生成メソッド。
@@ -60,18 +62,62 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         RestTemplate rest = new RestTemplate();
         // プロキシ設定が必要の場合
         // RestTemplate rest = myRest("proxy.co.jp", 8080);
-
-        String jsonString = rest.getForObject(SEARCH_URL, String.class, getGenreName(genreId), subgenreId);
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> top10Map = (Map<String, Object>) mapper.readValue(jsonString, Map.class).get("feed");
-        List<Map<String, Object>> top10List = (List<Map<String, Object>>) top10Map.get("entry");
-
         List<Item> top10 = new ArrayList<Item>();
-        for (Map<String, Object> map : top10List) {
-            Map<String, Map<String, Object>> mapId = (Map<String, Map<String, Object>>) map.get("id");
-            top10.add(searchItem(genreId, (String) mapId.get("attributes").get("im:id")));
+
+
+        if (genreId==MOVIE_ID) {
+            if(oldTop10movie==null)            {
+                String jsonString = rest.getForObject(SEARCH_URL, String.class, getGenreName(genreId), subgenreId);
+                ObjectMapper mapper = new ObjectMapper();
+                Map<String, Object> top10Map = (Map<String, Object>) mapper.readValue(jsonString, Map.class).get("feed");
+                List<Map<String, Object>> top10List = (List<Map<String, Object>>) top10Map.get("entry");
+
+
+                for (Map<String, Object> map : top10List) {
+                    Map<String, Map<String, Object>> mapId = (Map<String, Map<String, Object>>) map.get("id");
+                    top10.add(searchItem(genreId, (String) mapId.get("attributes").get("im:id")));
+                }
+                oldTop10movie=top10;
+                return top10;
+            }
+            else            {
+                top10=oldTop10movie;
+                return top10;
+            }
+        } else if (genreId==MUSIC_ID) {
+            if(oldTop10music==null)            {
+                String jsonString = rest.getForObject(SEARCH_URL, String.class, getGenreName(genreId), subgenreId);
+                ObjectMapper mapper = new ObjectMapper();
+                Map<String, Object> top10Map = (Map<String, Object>) mapper.readValue(jsonString, Map.class).get("feed");
+                List<Map<String, Object>> top10List = (List<Map<String, Object>>) top10Map.get("entry");
+
+
+                for (Map<String, Object> map : top10List) {
+                    Map<String, Map<String, Object>> mapId = (Map<String, Map<String, Object>>) map.get("id");
+                    top10.add(searchItem(genreId, (String) mapId.get("attributes").get("im:id")));
+                }
+                oldTop10music=top10;
+                return top10;
+            }
+            else            {
+                top10=oldTop10music;
+                return top10;
+            }
+
         }
-        return top10;
+        else {
+            String jsonString = rest.getForObject(SEARCH_URL, String.class, getGenreName(genreId), subgenreId);
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> top10Map = (Map<String, Object>) mapper.readValue(jsonString, Map.class).get("feed");
+            List<Map<String, Object>> top10List = (List<Map<String, Object>>) top10Map.get("entry");
+
+
+            for (Map<String, Object> map : top10List) {
+                Map<String, Map<String, Object>> mapId = (Map<String, Map<String, Object>>) map.get("id");
+                top10.add(searchItem(genreId, (String) mapId.get("attributes").get("im:id")));
+            }
+            return top10;
+        }
     }
 
     public Item searchItem(String genreId, String id) throws IOException {

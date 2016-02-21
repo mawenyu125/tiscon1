@@ -48,7 +48,7 @@
     <div id="top">
         <div class="container">
             <div class="col-md-6 offer" data-animate="fadeInDown">
-                <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer of the day</a>  <a href="#">Get flat 35% off on orders over $50!</a>
+                <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake"><FONT size="6">Offer of the day</FONT></a><div><a href="#"><FONT size="5">Get flat 35% off on orders over $50!</FONT></a></div>
             </div>
             <div class="col-md-6" data-animate="fadeInDown">
                 <ul class="menu">
@@ -268,29 +268,7 @@
                     </div>
                     <!-- /.col-md-3 -->
 
-                    <div class="col-md-3 col-sm-6">
 
-                        <h4>Ranking</h4>
-
-                        <h5>Movie</h5>
-                        <ul>
-                            <#list movieGenres as movie>
-                                <li><a href="/category?genreId=33&subgenreId=${movie.id}">${movie.name}</a></li>
-                            </#list>
-                        </ul>
-                    </div>
-                    <!-- /.col-md-3 -->
-                    <div class="col-md-3 col-sm-6">
-                        <h5>Music</h5>
-                        <ul>
-                            <#list musicGenres as music>
-                                <li><a href="/category?genreId=34&subgenreId=${music.id}">${music.name}</a></li>
-                            </#list>
-                        </ul>
-
-                        <hr class="hidden-md hidden-lg">
-
-                    </div>
                     <!-- /.col-md-3 -->
 
                     <div class="col-md-3 col-sm-6">

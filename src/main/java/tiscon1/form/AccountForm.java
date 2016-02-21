@@ -20,7 +20,7 @@ public class AccountForm implements Serializable {
     @NotEmpty
     private String email;
 
-    @Size(min = 6)
+    @Size(min = 8)
     @NotEmpty
     private String password;
 

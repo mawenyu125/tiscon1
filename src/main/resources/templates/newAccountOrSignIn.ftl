@@ -14,7 +14,7 @@
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="box">
                         <h1>New account</h1>
 
@@ -29,8 +29,10 @@
                             <#assign error><#if spring.status.error> has-error</#if></#assign>
 
                             <div class="form-group${error}">
-                                <label for="name">Name</label>
+                                <label for="name">First Name</label>
                                 <input type="text" class="form-control" id="name" name="name" value="${spring.stringStatusValue}">
+                                <label for="name">Last Name</label>
+                                                               <input type="text" class="form-control" id="name" name="name" value="${spring.stringStatusValue}">
                                 <@spring.showErrors "<br/>", "help-block"/>
                             </div>
 
@@ -40,6 +42,16 @@
                             <div class="form-group${error}">
                                 <label for="email">Email</label>
                                 <input type="text" class="form-control" id="email" name="email" value="${spring.stringStatusValue}">
+                               <FORM>
+                               <H5>@</H5>
+                               <SELECT name="mail address">
+                               <OPTION value="saikou">gmail.com</OPTION>
+                               <OPTION value="docomo">docomo.ne.jp</OPTION>
+                               <OPTION value="hutuu">ezweb.ne.jp</OPTION>
+                               <OPTION value="saiaku">yahoo.co.jp</OPTION>
+                               </SELECT>
+                               </FORM>
+
                                 <@spring.showErrors "<br/>", "help-block"/>
                             </div>
 
@@ -50,6 +62,9 @@
 
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" value="${spring.stringStatusValue}">
+                               <label for="password">Password(Confirm)</label>
+                                                               <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" value="${spring.stringStatusValue}">
+
                                 <@spring.showErrors "<br/>", "help-block"/>
                             </div>
                             <div class="text-center">
